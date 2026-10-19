@@ -1,0 +1,28 @@
+# docker-compose configuration for the Secure Image Steganography Tool.
+#
+# Usage:
+#   docker-compose up --build
+#
+# Then open http://localhost:8501 in your browser.
+
+version: "3.9"
+
+services:
+  steg-app:
+    build: .
+    image: secure-steg:latest
+    container_name: secure-steg
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      # Quiet Streamlit's first-run telemetry prompt.
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      # Keep colours nice in container logs.
+      - PYTHONIOENCODING=utf-8
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

@@ -335,7 +335,7 @@ with tab_capacity:
 
 
 # ===========================================================================
-"""  # Security Analysis (removed)
+# """  # Security Analysis (removed)
 # ===========================================================================
 
 
@@ -405,60 +405,10 @@ with tab_capacity:
 """
 
 # ===========================================================================
-"""  # About (removed)
-# ===========================================================================
+# About section removed
 
+st.markdown("---")
+st.caption(
+    "This tool is intended for educational use only. It is not a substitute for professionally audited secure communications software."
+)
 
-    st.header("About this project")
-    st.markdown(
-        """
-        **Secure Image Steganography Tool with Optional Encryption** is a
-        final-year Information Security project that demonstrates two
-        complementary techniques for protecting message confidentiality:
-
-        1. **LSB Steganography** — hiding data within the least-significant
-           bits of image pixels so that the existence of the message itself
-           is concealed.
-        2. **Password-based symmetric encryption** — using PBKDF2-HMAC-SHA256
-           to derive a key from a user passphrase, then encrypting the message
-           with Fernet (AES-128-CBC + HMAC-SHA256) before embedding.
-
-        ### Tech stack
-        - Python 3.11+
-        - Streamlit (UI)
-        - Pillow & NumPy (image processing)
-        - `cryptography` (Fernet & PBKDF2)
-        - pytest (unit tests)
-        - Docker & GitHub Actions (deployment & CI)
-
-        ### Repository layout
-        ```
-        secure-steganography-tool/
-        ├── app.py                # Streamlit UI
-        ├── steganography.py      # LSB encode / decode
-        ├── encryption.py         # PBKDF2 + Fernet
-        ├── utils.py              # Helpers
-        ├── tests/                # pytest suite
-        ├── docs/                 # Academic report & slides outline
-        ├── assets/demo_images/   # Sample carrier images
-        ├── Dockerfile
-        ├── docker-compose.yml
-        └── .github/workflows/    # CI pipeline
-        ```
-
-        ### Author
-        - **Name:** _Rubaisha Ahmed & Ibrahim Sial_
-        - **Roll number:** _20221-33350 & 20211-30954_
-        - **Instructor:** _Salman Akber_
-        - **Institution:** _Institute of Business Management_
-
-        ### License
-        Released under the MIT License. See ``LICENSE`` for full text.
-        """
-    )
-
-    st.markdown("---")
-    st.caption(
-        "This tool is intended for educational use only. It is not a "
-        "substitute for professionally audited secure communications software."
-    )

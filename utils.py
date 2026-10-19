@@ -4,8 +4,6 @@ utils.py
 
 Miscellaneous helpers shared by the Streamlit UI and the core modules.
 
-Author: <Your Name>
-Course: Information Security – Final Year Project
 """
 
 from __future__ import annotations

@@ -42,13 +42,14 @@ from utils import (
 # ---------------------------------------------------------------------------
 # Page configuration
 # ---------------------------------------------------------------------------
-
 st.set_page_config(
-    page_title="Secure Image Steganography Tool",
+    page_title="Watermarking and Stego Course Project",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+
 
 # Lightweight CSS to give the app a slightly more polished feel without
 # departing too far from Streamlit defaults (dark-mode safe).

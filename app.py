@@ -335,13 +335,13 @@ with tab_capacity:
 
 
 # ===========================================================================
-# """  # Security Analysis (removed)
+# Security Analysis block removed
 # ===========================================================================
 
 
     
 
-    st.subheader("1. What is LSB steganography?")
+# st.subheader("1. What is LSB steganography?")
     st.markdown(
         "Least-Significant-Bit (LSB) steganography hides data inside the "
         "lowest-order bit of each colour channel. Because the human eye is "
@@ -402,7 +402,7 @@ with tab_capacity:
         "- Treat steganography as a *complement* to — never a substitute "
         "for — cryptographically sound communication."
     )
-"""
+
 
 # ===========================================================================
 # About section removed

@@ -8,8 +8,6 @@ Run locally::
 
     streamlit run app.py
 
-Author: Rubaisha Ahmed & Ibrahim Sial
-Course: Information Security – Final Year Project
 """
 
 from __future__ import annotations
@@ -332,83 +330,4 @@ with tab_capacity:
         f"Marker overhead: **{cap['marker_overhead_chars']}** characters reserved "
         "for the end-of-message sentinel `<<<END>>>`."
     )
-
-
-# ===========================================================================
-# Security Analysis block removed
-# ===========================================================================
-
-
-    
-
-# st.subheader("1. What is LSB steganography?")
-    st.markdown(
-        "Least-Significant-Bit (LSB) steganography hides data inside the "
-        "lowest-order bit of each colour channel. Because the human eye is "
-        "insensitive to single-bit variations in colour intensity, the "
-        "modified *stego image* is visually indistinguishable from the "
-        "original *cover image*."
-    )
-
-    st.subheader("2. Steganography vs. Encryption")
-    st.markdown(
-        "- **Encryption** protects the *content* of a message — an attacker "
-        "knows a secret message exists but cannot read it.\n"
-        "- **Steganography** protects the *existence* of a message — the "
-        "attacker is unaware that a message exists at all.\n"
-        "- Combining both gives **defence in depth**: even if an analyst "
-        "detects the steganographic channel, the recovered bytes remain "
-        "ciphertext."
-    )
-
-    st.subheader("3. Confidentiality in the CIA triad")
-    st.markdown(
-        "*Confidentiality* — one of the three pillars of information security "
-        "alongside *Integrity* and *Availability* — ensures information is "
-        "accessible only to authorised parties. This tool addresses "
-        "confidentiality through two complementary mechanisms: covert "
-        "transmission (steganography) and password-derived symmetric "
-        "encryption (Fernet, which is AES-128-CBC with HMAC-SHA256 for "
-        "integrity)."
-    )
-
-    st.subheader("4. Limitations & attack vectors")
-    st.markdown(
-        "- **Statistical steganalysis** (e.g. chi-square, RS analysis, sample "
-        "pair analysis) can detect LSB embedding because it perturbs the "
-        "distribution of pixel values.\n"
-        "- **Format conversion** to JPEG or any other lossy codec destroys "
-        "the payload.\n"
-        "- **Re-saving / resizing / cropping** the image by an intermediary "
-        "almost always destroys the payload.\n"
-        "- **Brute force on weak passwords** — although PBKDF2 with 480 000 "
-        "iterations adds significant cost, very weak passphrases remain "
-        "vulnerable.\n"
-        "- **Visual inspection of small images** with very large payloads "
-        "can occasionally reveal subtle artefacts (e.g. faint noise patterns)."
-    )
-
-    st.subheader("5. Best practices")
-    st.markdown(
-        "- Use carrier images with **rich natural noise** (photographs) "
-        "rather than flat synthetic graphics or screenshots.\n"
-        "- Never reuse the same carrier image for multiple secrets — "
-        "differential analysis trivially recovers them.\n"
-        "- Always combine steganography with **strong encryption** and a "
-        "high-entropy passphrase.\n"
-        "- Distribute stego images only through channels that preserve "
-        "lossless data (file transfer, encrypted email attachments). Avoid "
-        "social media platforms that recompress uploads.\n"
-        "- Treat steganography as a *complement* to — never a substitute "
-        "for — cryptographically sound communication."
-    )
-
-
-# ===========================================================================
-# About section removed
-
-st.markdown("---")
-st.caption(
-    "This tool is intended for educational use only. It is not a substitute for professionally audited secure communications software."
-)
 

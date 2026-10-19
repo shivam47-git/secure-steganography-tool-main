@@ -76,35 +76,11 @@ st.markdown(
 # ---------------------------------------------------------------------------
 
 with st.sidebar:
-    st.title("🛡️ Stego Tool")
-    st.caption("Secure Image Steganography with Optional Encryption")
+    st.title("🛡️ Watermarking and Steganography")
+    st.caption("Simple watermarking & steganography tool")
     st.markdown("---")
-    st.markdown(
-        """
-        **Course:** Information Security 
-        
-        **Project Type:** Final Course Project 
-        
-        **Author:** _Rubaisha Ahmed & Ibrahim Sial_ 
-        
-        **Student ID:** _20221-33350 & 20211-30954_
-        
-        **Instructor:** _Salman Akber_ 
-        
-        **Institution:** _Institute of Business Management_ 
-        
-        """
-    )
-    st.markdown("---")
-    st.markdown("### How it works")
-    st.markdown(
-        "This tool hides text inside the **least significant bits** of an "
-        "image's pixels. Optionally, the text is **encrypted** with a "
-        "password-derived key (PBKDF2 + Fernet) **before** being embedded, "
-        "giving you both *confidentiality* and *unobservability*."
-    )
-    st.markdown("---")
-    st.caption("Use only lossless images (PNG / BMP) as carriers.")
+    st.markdown("**How it works**: The tool hides text in the least‑significant bits of a lossless PNG/BMP image. You can optionally encrypt the message with a password before embedding.")
+    st.caption("Only PNG/BMP images are supported as carriers.")
 
 
 # ---------------------------------------------------------------------------
@@ -125,8 +101,8 @@ def _looks_like_encrypted(text: str) -> bool:
 # Tabs
 # ---------------------------------------------------------------------------
 
-tab_encode, tab_decode, tab_capacity, tab_security, tab_about = st.tabs(
-    ["➤ ENCODE", "  ➤ DECODE    ", "➤ CAPACITY CALCULATOR    ", "➤ SECURITY ANALYSIS    ", "➤ ABOUT    "]
+tab_encode, tab_decode, tab_capacity = st.tabs(
+    ["➤ ENCODE", "➤ DECODE", "➤ CAPACITY CALCULATOR"]
 )
 
 
@@ -359,11 +335,11 @@ with tab_capacity:
 
 
 # ===========================================================================
-# Tab 4 — Security Analysis
+"""  # Security Analysis (removed)
 # ===========================================================================
 
-with tab_security:
-    st.header("Security analysis")
+
+    
 
     st.subheader("1. What is LSB steganography?")
     st.markdown(
@@ -426,13 +402,13 @@ with tab_security:
         "- Treat steganography as a *complement* to — never a substitute "
         "for — cryptographically sound communication."
     )
-
+"""
 
 # ===========================================================================
-# Tab 5 — About
+"""  # About (removed)
 # ===========================================================================
 
-with tab_about:
+
     st.header("About this project")
     st.markdown(
         """

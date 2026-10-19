@@ -12,8 +12,6 @@ channel of the carrier image, scanning pixels in row-major order.
 Only **lossless** carrier formats (PNG and BMP) are supported. JPEG and other
 lossy formats would silently corrupt the embedded bits during compression.
 
-Author: <Your Name>
-Course: Information Security – Final Year Project
 """
 
 from __future__ import annotations

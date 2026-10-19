@@ -18,8 +18,6 @@ Wire format produced by :func:`encrypt_message` (and consumed by
 The base64 layer keeps the payload safely embeddable inside a UTF-8 string
 delimited by the steganography sentinel.
 
-Author: <Your Name>
-Course: Information Security – Final Year Project
 """
 
 from __future__ import annotations

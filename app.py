@@ -1,12 +1,6 @@
 """
-app.py
-======
-
-Streamlit front-end for the Secure Image Steganography Tool.
 
 Run locally::
-
-    streamlit run app.py
 
 """
 

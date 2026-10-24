@@ -2,8 +2,6 @@
 encryption.py
 =============
 
-Password-based symmetric encryption for the Secure Image Steganography Tool.
-
 This module wraps :pymod:`cryptography`'s Fernet (AES-128-CBC + HMAC-SHA256)
 authenticated symmetric scheme with a password-based key derivation function
 (PBKDF2-HMAC-SHA256). A random per-message salt is generated and prepended to
@@ -59,27 +57,7 @@ class InvalidPasswordError(Exception):
 # ---------------------------------------------------------------------------
 
 def derive_key(password: str, salt: bytes) -> bytes:
-    """Derive a Fernet-compatible key from ``password`` and ``salt``.
 
-    Uses PBKDF2-HMAC-SHA256 with :data:`PBKDF2_ITERATIONS` iterations.
-
-    Parameters
-    ----------
-    password:
-        The user-supplied passphrase. Must be a non-empty string.
-    salt:
-        Random salt bytes; should be :data:`SALT_SIZE` bytes long.
-
-    Returns
-    -------
-    bytes
-        A 44-byte url-safe base64 string suitable for :class:`Fernet`.
-
-    Raises
-    ------
-    ValueError
-        If ``password`` is empty.
-    """
     if not password:
         raise ValueError("Password must be a non-empty string.")
 
@@ -98,24 +76,7 @@ def derive_key(password: str, salt: bytes) -> bytes:
 # ---------------------------------------------------------------------------
 
 def encrypt_message(message: str, password: str) -> str:
-    """Encrypt ``message`` with a password-derived key.
-
-    A fresh random salt is generated for every call. The returned string is a
-    base64-encoded blob of ``salt || fernet_token`` that can be safely embedded
-    inside a steganographic payload.
-
-    Parameters
-    ----------
-    message:
-        Plaintext message to encrypt. Must not be empty.
-    password:
-        Passphrase used to derive the encryption key.
-
-    Returns
-    -------
-    str
-        ASCII-safe base64 string containing the salt and the Fernet token.
-    """
+ 
     if not message:
         raise ValueError("Message must be a non-empty string.")
 
@@ -128,27 +89,7 @@ def encrypt_message(message: str, password: str) -> str:
 
 
 def decrypt_message(payload_b64: str, password: str) -> str:
-    """Decrypt a payload produced by :func:`encrypt_message`.
 
-    Parameters
-    ----------
-    payload_b64:
-        Base64 string of ``salt || fernet_token``.
-    password:
-        Passphrase to derive the decryption key.
-
-    Returns
-    -------
-    str
-        The recovered plaintext.
-
-    Raises
-    ------
-    InvalidPasswordError
-        If the password is incorrect or the payload has been tampered with.
-    ValueError
-        If the payload is malformed (e.g. truncated salt).
-    """
     try:
         payload = base64.urlsafe_b64decode(payload_b64.encode("ascii"))
     except (ValueError, TypeError) as exc:
@@ -176,19 +117,7 @@ def decrypt_message(payload_b64: str, password: str) -> str:
 # ---------------------------------------------------------------------------
 
 def password_strength(password: str) -> tuple[int, str]:
-    """Return a coarse strength score (0-4) and a human-readable label.
-
-    The score is a simple heuristic intended for UI feedback only — it is **not**
-    a substitute for proper password policy. Criteria:
-
-    * length >= 8
-    * contains lowercase letters
-    * contains uppercase letters
-    * contains digits
-    * contains punctuation/symbols
-
-    A point is awarded for each criterion met (length being a hard prerequisite).
-    """
+    
     if not password:
         return 0, "Empty"
 

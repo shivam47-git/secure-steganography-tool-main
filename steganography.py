@@ -1,18 +1,4 @@
-"""
-steganography.py
-================
 
-Least-Significant-Bit (LSB) image steganography for the Secure Image
-Steganography Tool.
-
-The encoder writes each bit of the UTF-8 encoded payload — followed by a fixed
-ASCII sentinel ``<<<END>>>`` — into the least-significant bit of every colour
-channel of the carrier image, scanning pixels in row-major order.
-
-Only **lossless** carrier formats (PNG and BMP) are supported. JPEG and other
-lossy formats would silently corrupt the embedded bits during compression.
-
-"""
 
 from __future__ import annotations
 
@@ -63,16 +49,7 @@ class UnsupportedImageFormatError(SteganographyError):
 # ---------------------------------------------------------------------------
 
 def calculate_capacity(width: int, height: int) -> dict[str, int | float]:
-    """Return the embedding capacity of an ``width`` x ``height`` RGB image.
 
-    Each pixel contributes :data:`CHANNELS_USED` bits (one per RGB channel).
-
-    Returns
-    -------
-    dict
-        ``total_bits``, ``total_bytes``, ``max_chars`` (assuming 1 byte/char),
-        and ``marker_overhead_chars`` (the cost of the sentinel).
-    """
     if width <= 0 or height <= 0:
         raise ValueError("Width and height must be positive integers.")
 
@@ -137,30 +114,7 @@ def _validate_carrier(image: Image.Image) -> Image.Image:
 
 
 def encode_image(image: Image.Image, message: str) -> Image.Image:
-    """Embed ``message`` into ``image`` via LSB steganography.
 
-    Parameters
-    ----------
-    image:
-        The carrier image. Will be converted to RGB internally.
-    message:
-        The plaintext (or ciphertext) string to embed. The sentinel
-        :data:`END_MARKER` is appended automatically.
-
-    Returns
-    -------
-    PIL.Image.Image
-        A new RGB image of the same dimensions with the payload embedded.
-
-    Raises
-    ------
-    MessageTooLargeError
-        If the message + marker do not fit in the image.
-    UnsupportedImageFormatError
-        If the carrier image is in a lossy format such as JPEG.
-    ValueError
-        If ``message`` is empty.
-    """
     if not message:
         raise ValueError("Message must be a non-empty string.")
 
@@ -188,11 +142,7 @@ def encode_image(image: Image.Image, message: str) -> Image.Image:
 
 
 def encode_to_png_bytes(image: Image.Image, message: str) -> bytes:
-    """Encode a message and return the stego-image as PNG bytes.
-
-    Convenience wrapper around :func:`encode_image` that serialises the result
-    to a lossless PNG byte string ready for download.
-    """
+  
     stego = encode_image(image, message)
     buffer = io.BytesIO()
     stego.save(buffer, format="PNG", optimize=True)
@@ -204,29 +154,7 @@ def encode_to_png_bytes(image: Image.Image, message: str) -> bytes:
 # ---------------------------------------------------------------------------
 
 def decode_image(image: Image.Image) -> str:
-    """Extract the hidden message from ``image``.
 
-    The decoder reads every LSB, packs them into a byte stream, and then
-    searches for the sentinel ``<<<END>>>`` as a raw byte sequence. Only the
-    bytes *before* the sentinel are interpreted as UTF-8, so trailing random
-    LSBs of an unused image region cannot corrupt the decode.
-
-    Parameters
-    ----------
-    image:
-        A candidate stego-image (PNG or BMP).
-
-    Returns
-    -------
-    str
-        The recovered message (without the sentinel).
-
-    Raises
-    ------
-    NoHiddenMessageError
-        If no end-marker is found in the bitstream, or if the prefix before
-        the marker is not valid UTF-8.
-    """
     rgb = _validate_carrier(image)
     arr = np.array(rgb, dtype=np.uint8).reshape(-1)
 

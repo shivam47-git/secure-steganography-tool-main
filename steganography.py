@@ -13,14 +13,10 @@ from PIL import Image
 # Constants
 # ---------------------------------------------------------------------------
 
-#: Sentinel appended to every payload so the decoder knows where to stop.
-#: Chosen to be short, ASCII-only, and extremely unlikely to appear by chance.
 END_MARKER: Final[str] = "<<<END>>>"
 
-#: Image formats whose pixels survive a save/load round-trip unchanged.
 SUPPORTED_FORMATS: Final[tuple[str, ...]] = ("PNG", "BMP")
 
-#: Number of channels used for embedding (R, G, B).
 CHANNELS_USED: Final[int] = 3
 
 
@@ -67,7 +63,6 @@ def calculate_capacity(width: int, height: int) -> dict[str, int | float]:
 
 
 def utilization_percentage(message_chars: int, width: int, height: int) -> float:
-    """Return the percentage of available payload bytes used by a message."""
     capacity = calculate_capacity(width, height)
     max_chars = capacity["max_chars"]
     if max_chars == 0:
@@ -80,7 +75,6 @@ def utilization_percentage(message_chars: int, width: int, height: int) -> float
 # ---------------------------------------------------------------------------
 
 def _text_to_bits(text: str) -> np.ndarray:
-    """Convert a UTF-8 string to a flat ``uint8`` numpy array of bits."""
     raw = text.encode("utf-8")
     # np.unpackbits expects uint8 — produces MSB-first bits, which we keep.
     bits = np.unpackbits(np.frombuffer(raw, dtype=np.uint8))
@@ -88,7 +82,6 @@ def _text_to_bits(text: str) -> np.ndarray:
 
 
 def _bits_to_bytes(bits: np.ndarray) -> bytes:
-    """Pack a flat MSB-first bit array (uint8 of 0/1) into a ``bytes`` object."""
     # Trim trailing partial byte if any (defensive).
     usable_len = (len(bits) // 8) * 8
     bits = bits[:usable_len]
@@ -100,16 +93,13 @@ def _bits_to_bytes(bits: np.ndarray) -> bytes:
 # ---------------------------------------------------------------------------
 
 def _validate_carrier(image: Image.Image) -> Image.Image:
-    """Validate carrier format and return an RGB-converted copy."""
     fmt = (image.format or "").upper()
-    # When loaded from raw bytes the format is set; when constructed in code it
-    # may be None. We only reject formats we *know* are lossy.
+
     if fmt and fmt not in SUPPORTED_FORMATS and fmt in {"JPEG", "JPG", "WEBP"}:
         raise UnsupportedImageFormatError(
             f"Format '{fmt}' is lossy and not supported. "
             f"Use one of: {', '.join(SUPPORTED_FORMATS)}."
         )
-    # Always work in RGB so we know channel layout.
     return image.convert("RGB")
 
 

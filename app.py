@@ -42,9 +42,6 @@ st.set_page_config(
 )
 
 
-
-# Lightweight CSS to give the app a slightly more polished feel without
-# departing too far from Streamlit defaults (dark-mode safe).
 st.markdown(
     """
     <style>
@@ -80,7 +77,6 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 
 def _looks_like_encrypted(text: str) -> bool:
-    """Cheap heuristic: encrypted payloads are url-safe base64 of >= 60 chars."""
     import string
 
     if len(text) < 60:

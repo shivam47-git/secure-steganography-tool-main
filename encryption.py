@@ -1,22 +1,3 @@
-"""
-encryption.py
-=============
-
-This module wraps :pymod:`cryptography`'s Fernet (AES-128-CBC + HMAC-SHA256)
-authenticated symmetric scheme with a password-based key derivation function
-(PBKDF2-HMAC-SHA256). A random per-message salt is generated and prepended to
-the ciphertext so that the same password produces different ciphertexts for
-identical plaintexts, and so that decryption is fully self-contained.
-
-Wire format produced by :func:`encrypt_message` (and consumed by
-:func:`decrypt_message`)::
-
-    base64( salt(16 bytes) || fernet_token )
-
-The base64 layer keeps the payload safely embeddable inside a UTF-8 string
-delimited by the steganography sentinel.
-
-"""
 
 from __future__ import annotations
 
